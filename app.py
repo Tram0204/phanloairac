@@ -3,7 +3,6 @@ os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"        # Tắt ONEDNN delegate
 os.environ["TF_DELEGATE_ENABLE"] = "0"           # Tắt XNNPACK
 os.environ["TF_USE_LEGACY_KERAS"] = "1"          # ⚠️ Ép dùng Keras chuẩn, không TFLite hóa ngầm
 
-
 import streamlit as st
 import numpy as np
 import tensorflow as tf
@@ -297,7 +296,6 @@ def main():
         status_text = st.empty()
         
         results = []
-        duplicate_count = 0
         
         for i, uploaded_file in enumerate(uploaded_files):
             # Update progress
@@ -308,12 +306,6 @@ def main():
             # Load and process image
             img = Image.open(uploaded_file)
             img_hash = get_image_hash(img)
-            
-            # Check for duplicates
-            if img_hash in st.session_state.processed_images:
-                duplicate_count += 1
-                st.warning(f"⚠️ Ảnh {uploaded_file.name} đã được xử lý trước đó!")
-                continue
             
             # Process image
             input_tensor = process_image(img)
@@ -358,10 +350,6 @@ def main():
         # Clear progress
         progress_bar.empty()
         status_text.empty()
-        
-        # Show warnings
-        if duplicate_count > 0:
-            st.warning(f"⚠️ Phát hiện {duplicate_count} ảnh trùng lặp!")
         
         # Display results
         for result in results:
