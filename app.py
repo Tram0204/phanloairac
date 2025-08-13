@@ -425,20 +425,8 @@ def main():
                     
                     st.markdown("---")
         
-        # Heatmap by day of week and hour
-        if len(df) > 10:
-            df['Ngày trong tuần'] = df['Thời gian'].dt.day_name()
-            df['Giờ'] = df['Thời gian'].dt.hour
-            
-            heatmap_data = df.groupby(['Ngày trong tuần', 'Giờ']).size().reset_index(name='Số lượng')
-            pivot_data = heatmap_data.pivot(index='Ngày trong tuần', columns='Giờ', values='Số lượng').fillna(0)
-            
-            fig = px.imshow(
-                pivot_data,
-                aspect='auto',
-                title="Hoạt động phân loại rác theo giờ và ngày"
-            )
-            st.plotly_chart(fig, use_container_width=True)
+        # ĐÃ XÓA: Heatmap by day of week and hour
+        # Phần code heatmap hoạt động theo giờ và ngày đã được gỡ bỏ hoàn toàn
         
         # Top statistics
         st.subheader("📊 Thống kê tổng quan")
